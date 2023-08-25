@@ -1,0 +1,392 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>main</title>
+	<!-- <link rel="stylesheet" href="css/style.css"> -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+	<style>
+		body {
+			position: relative;
+			z-index: 0;
+			height: 100vh;
+		}
+		body::before {
+			content: '';
+			background-image: url('img/background.jpg');
+			background-position: center;
+			background-size: cover;
+			background-attachment: fixed;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			color: black;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			filter: blur(3px);
+			z-index: -1;
+			
+		}
+		
+		a {
+			text-decoration: none;
+			color: black;
+		}
+		
+		a:hover {
+			color: black;
+		}
+		
+		.upbar {
+			padding: 15px 20px;
+			
+		}
+		
+		.upbar-contents {
+			display: flex;
+			padding-right: 20vw;
+			justify-content: space-around;
+			flex-wrap: wrap;
+		}
+		
+		.upbar h2 {
+			margin: 0;
+			text-shadow: 2px 5px 15px #ffffff;
+			text-align: center;
+		}
+		
+		.upbar h4 {
+			padding: 5px 0px;
+			margin: 0;
+			text-shadow: 2px 5px 15px #ffffff;
+		}
+		
+		.upbar .active {
+			border-bottom: solid 3px rgba(153,230,0);
+			border-bottom-style: dotted;
+			border-width: 6px;
+		}
+		
+		.upbar-contents a h4 {
+			margin: 0;
+			padding: 5px 10px;
+			transition: color 0.3s;
+		}
+		
+		.upbar-contents a h4 span {
+			position: relative;
+			display: inline-block;
+			padding-bottom: 6px;
+		}
+		
+		.upbar-contents a h4 span::before {
+			content: '';
+			position: absolute;
+			bottom: -10px;
+			left: 50%;
+			width: 0;
+			height: 5px;
+			background-color: rgba(128,255,128, 0.525);
+			transition: width 0.3s ease-in-out;
+			transform: translateX(-50%);
+		}
+		
+		.upbar-contents a h4:hover span::before {
+			width: calc(80%);
+		}
+		
+		.close-button {
+			position: absolute;
+			top: 10px;
+			right: 20px;
+			font-size: 30px;
+			cursor: pointer;
+		}
+		
+		.warning-overlay {
+			width: 30%;
+			background: #000000a0;
+			padding: 3% 4%;
+			box-sizing: border-box;
+			display: none;
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			color: white;
+			-webkit-transform: translate(-50%, -50%);
+			transform: translate(-50%, -50%);
+		}
+		.warning-top h2 {
+			margin: 0px 10px 0px 0px
+		}
+		.warning-top .small {
+			padding-top: 20px;
+			margin: 0;
+		}
+
+		.main {
+			margin-top: 50px;
+			text-shadow: 2px 5px 15px #ffffff;
+		}
+
+		.dataA {
+			background-color: #ffffff51;
+			border: 5px solid #d04141; 
+			border-radius: 9px;
+			height: 80vh;
+		}
+		.dataB {
+			background-color: #ffffff51;
+			border: 5px solid #4159d0;  
+			border-radius: 9px;
+			height: 80vh;
+		}
+
+		.data-contents {
+			padding: 20px;
+		}
+
+		.data-contents a {
+			text-align: center;
+		}
+
+		.data-tmp {
+			padding: 80px 0px 25px 40px;
+			display: flex;
+			text-shadow: 5px 10px 15px #ff2d2d49;
+			align-items: center;
+		}
+
+		.data-hum {
+			margin-top: 50px;
+			padding: 50px 0px 25px 20px;
+			display: flex;
+			text-shadow: 5px 10px 15px #2dd5ff49;
+			align-items: center;
+		}
+
+		.data-text {
+			margin-top: 20px;
+			padding-left: 50px;
+			font-size: 50px;
+		}
+		.big {
+			padding-left: 10px;
+			font-size: 150%;
+		}
+
+		.btn,
+		a.btn,
+		button.btn {
+			font-size: 1.6rem;
+			font-weight: 700;
+			line-height: 1.5;
+			position: relative;
+			display: inline-block;
+			padding: 1rem 4rem;
+			cursor: pointer;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			-webkit-transition: all 0.3s;
+			transition: all 0.3s;
+			text-align: center;
+			vertical-align: middle;
+			text-decoration: none;
+			letter-spacing: 0.1em;
+			color: #c2c2c2;
+			border-radius: 0.5rem;
+			background-color: #1414143f;
+			text-shadow: none;
+		}
+		a.btn--red.btn--cubic {
+			border-bottom: 5px solid #3b1e2066;
+		}
+		a.btn--blue.btn--cubic {
+			border-bottom: 5px solid #1e243b66;
+		}
+
+		a.btn--red.btn--cubic:hover {
+			margin-top: 3px;
+			border-bottom: 2px solid #3b1e2066;
+			background-color: #67262649;
+			color: #bababa;
+			text-shadow: none;
+		}
+		a.btn--blue.btn--cubic:hover {
+			margin-top: 3px;
+			border-bottom: 2px solid #1e1e3b66;
+			background-color: #262e6749;
+			color: #bababa;
+			text-shadow: none;
+		}
+		a.btn--radius {
+			border-radius: 100vh;
+		}
+
+		.fa-position-right {
+			position: absolute;
+			top: calc(50% - .5em);
+			right: 1rem;
+		}
+
+		.under {
+			margin-top: 35%;
+		}
+	</style>
+    <script>
+			function showWarning() {
+				document.getElementById("warning-overlay").style.display = "block";
+			}
+
+			function hideWarning() {
+				document.getElementById("warning-overlay").style.display = "none";
+			}
+
+			
+			let lastWarningTime = 0;
+			const warningDelay = 600000;
+			let count = 0;
+			let startWarningTime = 0;
+
+			let lastWarningTimeB = 0;
+			let countB = 0;
+			let startWarningTimeB = 0;
+
+			function updateData() {
+				const currentTime = Date.now();
+				const xhr = new XMLHttpRequest();
+				xhr.onreadystatechange = function() {
+					if (xhr.readyState === 4 && xhr.status === 200) {
+						const data = JSON.parse(xhr.responseText);
+						if (data.CTA !== null && data.CHA !== null) {
+							document.getElementById("data1-1").textContent = `温度: ${data.CTA}℃`;
+							document.getElementById("data1-2").textContent = `湿度: ${data.CHA}%`;
+							if (parseFloat(data.CTA) < 0 && currentTime - lastWarningTime >= warningDelay) {
+								showWarning();
+								if (count == 0) {
+										startWarningTime = currentTime;
+								}
+								count += 1;
+								lastWarningTime = currentTime;
+								document.getElementById("warning-starttime").textContent = `Warning Start: ` . startWarningTime;
+							}
+						} else {
+							document.getElementById("data").textContent = "データがありません。";
+						}
+						if (data.CTB !== null && data.CHB !== null) {
+							document.getElementById("data2-1").textContent = `温度: ${data.CTB}℃`;
+							document.getElementById("data2-2").textContent = `湿度: ${data.CHB}%`;
+							if (parseFloat(data.CTB) < 0 && currentTime - lastWarningTimeB >= warningDelay) {
+								showWarning();
+								if (countB == 0) {
+										startWarningTimeB = currentTime;
+								}
+								countB += 1;
+								lastWarningTimeB = currentTime;
+								document.getElementById("warning-starttime").textContent = `Warning Start: ` . startWarningTimeB;
+							}
+						} else {
+							document.getElementById("data").textContent = "データがありません。";
+						}
+						if (parseFloat(data.CTA) >= 0 && parseFloat(data.CTB) >= 0) {
+							hideWarning();
+							count = 0;
+							countB = 0;
+						}
+					}
+				};
+				xhr.open("GET", "read_csv.php", true);
+				xhr.send();
+			}
+
+			window.onload = function() {
+				updateData();
+				setInterval(updateData, 1000);
+			};
+	</script>
+</head>
+</head>
+	<body>
+	<div class="upbar">
+		<div class="row">
+			<div class="col-md-3">
+				<h2><strong>環境管理システム</strong></h2>
+			</div>
+			<div class="col-md-9">
+				<div class="upbar-contents">
+					<a href="#"><h4 class="active"><strong>メイン</strong></h4></a>
+					<a href="detailA.php"><h4><span>詳細</span></h4></a>
+					<a href="#"><h4><span>システム操作</span></h4></a>
+					<a href="#"><h4><span>稼働状況</span></h4></a>
+					<a href="#"><h4><span>お問い合わせ</span></h4></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="main">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-5">
+					<div class="dataA">
+						<div class="data-contents">
+							<h1>工場<strong class="big">A</strong></h1>
+							<div class="data-tmp">
+								<img src="img/tmp.png" alt="温度計" height="100px">
+								<span id="data1-1" class="data-text"></span>
+							</div>
+							<div class="data-hum">
+								<img src="img/water.png" alt="湿度" height="100px">
+								<span id="data1-2" class="data-text"></span>
+							</div>
+							<div class="d-flex justify-content-center under">
+								<a href="detailA.php" class="btn btn--red btn--radius btn--cubic">詳しく見る<i class="fas fa-angle-right fa-position-right"></i></a>
+							</div>
+						</div>
+					</div>
+				
+				</div>
+				<div class="col-md-2"></div>
+				<div class="col-md-5">
+					<div class="dataB">
+						<div class="data-contents">
+							<h1>工場<strong class="big">B</strong></h1>
+							<div class="data-tmp">
+								<img src="img/tmp.png" alt="温度計" height="100px">
+								<span id="data2-1" class="data-text"></span>
+							</div>
+							<div class="data-hum">
+								<img src="img/water.png" alt="湿度" height="100px">
+								<span id="data2-2" class="data-text"></span>
+							</div>
+							<div class="d-flex justify-content-center under">
+								<a href="detailB.php" class="btn btn--blue btn--radius btn--cubic">詳しく見る<i class="fas fa-angle-right fa-position-right"></i></a>
+							</div>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="warning-overlay" class="warning-overlay">
+		<span class="close-button" onclick="hideWarning()">ｘ</span>
+		<div class="warning-top">
+			<h2><strong>警告</strong></h2>
+			<p class="small" id="warning-starttime"></p>
+		</div>
+		<hr>
+		<p><strong>温度または湿度に異常が発生してます。<br>システム稼働状況を確認してください。</strong></p>
+	</div>
+	
+	<!-- Script -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
+</body>
+</html>
